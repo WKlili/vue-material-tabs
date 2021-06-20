@@ -140,10 +140,9 @@ You can create your own personalized themes, passing an object with the properti
 
 ### Events
 
-| Name   | Description                                      |
-| ------ | ------------------------------------------------ |
-| input  | Emitted when tab is changed.                     |
-| change | Emitted when tab is changed by user interaction. |
+| Name  | Description                  |
+| ----- | ---------------------------- |
+| input | Emitted when tab is changed. |
 
 ## TabItem
 

@@ -135,12 +135,7 @@ export default {
 
   methods: {
     select(navItem) {
-      if (!navItem?.disabled) {
-        this.$emit("select", {
-          tabItem: navItem,
-          byUser: true,
-        });
-      }
+      this.$emit("select", navItem);
     },
 
     async sliderHandler() {
