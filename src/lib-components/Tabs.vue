@@ -65,6 +65,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    noTouch: Boolean,
   },
 
   data: () => ({
@@ -103,7 +104,7 @@ export default {
     getTheme() {
       if (typeof this.theme === "string") {
         return $themes[this.theme] || $themes.default;
-      } else if (typeof this.theme === "object" && this.theme !== null) {
+      } else if (typeof this.theme === "object" && this.theme) {
         return this.theme;
       }
       return $themes.default;
@@ -183,14 +184,16 @@ export default {
     },
 
     onTouchSlide(to) {
-      let tabItem;
-      const { current, last } = this.tabItemIndexes;
-      if (to === "next" && current < last) {
-        tabItem = this.navItems[current + 1];
-      } else if (to === "prev" && current > 0) {
-        tabItem = this.navItems[current - 1];
+      if (!this.noTouch) {
+        let tabItem;
+        const { current, last } = this.tabItemIndexes;
+        if (to === "next" && current < last) {
+          tabItem = this.navItems[current + 1];
+        } else if (to === "prev" && current > 0) {
+          tabItem = this.navItems[current - 1];
+        }
+        tabItem && this.activeTabItem(tabItem);
       }
-      tabItem && this.activeTabItem(tabItem);
     },
 
     findIndexTab(tab) {

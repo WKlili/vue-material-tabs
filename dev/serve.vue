@@ -48,6 +48,7 @@
         :dark="dark"
         :slide="slide"
         theme="purple"
+        no-touch
       >
         <TabItem>
           <template #name>
@@ -194,7 +195,7 @@ body {
 
 .tab-wrapper {
   /* height: 610px; */
-  width: 1000px;
+  width: 900px;
   box-shadow: rgba(0, 0, 0, 0.096) 10px 10px 90px;
 }
 
