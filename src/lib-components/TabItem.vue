@@ -1,5 +1,5 @@
 <template>
-  <transition :name="slideDirection">
+  <transition :name="slideDirection" @beforeEnter="beforeEnter" @leave="leave">
     <div
       v-show="isActived"
       :style="{ 'transition-duration': `${transition.duration}ms` }"
@@ -82,17 +82,27 @@ export default {
       this.tabs.navItems[this.ownNavItemIndex].disabled = payload;
     },
   },
+
+  methods: {
+    beforeEnter(el) {
+      el.style.position = "relative";
+    },
+
+    leave(el) {
+      el.style.position = "absolute";
+    },
+  },
 };
 </script>
 
 <style scoped>
 .tab-item {
-  position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  height: 100%;
   width: 100%;
+  height: inherit;
+  background: white;
   transition: transform cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 

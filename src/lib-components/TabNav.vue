@@ -114,6 +114,10 @@ export default {
     orientation() {
       return this.vertical ? "portrait" : "landscape";
     },
+
+    slider() {
+      return this.$refs?.slider;
+    },
   },
 
   watch: {
@@ -135,12 +139,7 @@ export default {
 
   methods: {
     select(navItem) {
-      if (!navItem?.disabled) {
-        this.$emit("select", {
-          tabItem: navItem,
-          byUser: true,
-        });
-      }
+      this.$emit("select", navItem);
     },
 
     async sliderHandler() {
@@ -162,23 +161,25 @@ export default {
         prefix: "navActive",
       });
 
-      Object.assign(
-        this.$refs.slider.style,
-        {
-          portrait: {
-            height: `${navActiveHeight}px`,
-            top: `${navActiveTop - navItemsTop}px`,
-            width: "",
-            left: "",
-          },
-          landscape: {
-            width: `${navActiveWidth}px`,
-            left: `${navActiveLeft - navItemsLeft}px`,
-            height: "",
-            top: "",
-          },
-        }[this.orientation]
-      );
+      if (this.slider) {
+        Object.assign(
+          this.slider?.style,
+          {
+            portrait: {
+              height: `${navActiveHeight}px`,
+              top: `${navActiveTop - navItemsTop}px`,
+              width: "",
+              left: "",
+            },
+            landscape: {
+              width: `${navActiveWidth}px`,
+              left: `${navActiveLeft - navItemsLeft}px`,
+              height: "",
+              top: "",
+            },
+          }[this.orientation]
+        );
+      }
     },
 
     setPagination() {
@@ -321,7 +322,7 @@ export default {
       const { nav, navItem, slider } = this.theme;
       this.$el.style.background = nav;
       this.$refs.navItems.style.color = navItem;
-      this.$refs.slider.style.background = slider;
+      if (this.slider) this.slider.style.background = slider;
     },
 
     getActiveColor({ model }) {
@@ -447,7 +448,6 @@ export default {
   padding-bottom: 1.6rem;
 }
 
-/* Nav auto */
 .tab__pagination--auto .tab__nav__item {
   flex: 1 auto;
 }

@@ -48,6 +48,7 @@
         :dark="dark"
         :slide="slide"
         theme="purple"
+        no-touch
       >
         <TabItem>
           <template #name>
@@ -58,7 +59,64 @@
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe
             repellendus itaque in, dolore hic explicabo tenetur odit magnam
             laborum vitae fugiat maiores eum consequuntur libero id. Repudiandae
-            quia et possimus?
+            quia et possimus? Lorem ipsum dolor, sit amet consectetur
+            adipisicing elit. Saepe repellendus itaque in, dolore hic explicabo
+            tenetur odit magnam laborum vitae fugiat maiores eum consequuntur
+            libero id. Repudiandae quia et possimus? Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Saepe repellendus itaque in, dolore
+            hic explicabo tenetur odit magnam laborum vitae fugiat maiores eum
+            consequuntur libero id. Repudiandae quia et possimus? Lorem ipsum
+            dolor, sit amet consectetur adipisicing elit. Saepe repellendus
+            itaque in, dolore hic explicabo tenetur odit magnam laborum vitae
+            fugiat maiores eum consequuntur libero id. Repudiandae quia et
+            possimus? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            Saepe repellendus itaque in, dolore hic explicabo tenetur odit
+            magnam laborum vitae fugiat maiores eum consequuntur libero id.
+            Repudiandae quia et possimus? Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Saepe repellendus itaque in, dolore
+            hic explicabo tenetur odit magnam laborum vitae fugiat maiores eum
+            consequuntur libero id. Repudiandae quia et possimus? Lorem ipsum
+            dolor, sit amet consectetur adipisicing elit. Saepe repellendus
+            itaque in, dolore hic explicabo tenetur odit magnam laborum vitae
+            fugiat maiores eum consequuntur libero id. Repudiandae quia et
+            possimus? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            Saepe repellendus itaque in, dolore hic explicabo tenetur odit
+            magnam laborum vitae fugiat maiores eum consequuntur libero id.
+            Repudiandae quia et possimus? Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Saepe repellendus itaque in, dolore
+            hic explicabo tenetur odit magnam laborum vitae fugiat maiores eum
+            consequuntur libero id. Repudiandae quia et possimus? Lorem ipsum
+            dolor, sit amet consectetur adipisicing elit. Saepe repellendus
+            itaque in, dolore hic explicabo tenetur odit magnam laborum vitae
+            fugiat maiores eum consequuntur libero id. Repudiandae quia et
+            possimus? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            Saepe repellendus itaque in, dolore hic explicabo tenetur odit
+            magnam laborum vitae fugiat maiores eum consequuntur libero id.
+            Repudiandae quia et possimus? Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Saepe repellendus itaque in, dolore
+            hic explicabo tenetur odit magnam laborum vitae fugiat maiores eum
+            consequuntur libero id. Repudiandae quia et possimus?
+          </div>
+        </TabItem>
+
+        <TabItem>
+          <template #name>
+            <span>Custom 🚀</span>
+          </template>
+
+          <div class="tab-content">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe
+            repellendus itaque in, dolore hic explicabo tenetur odit magnam
+            laborum vitae fugiat maiores eum consequuntur libero id. Repudiandae
+            quia et possimus? Lorem ipsum dolor, sit amet consectetur
+            adipisicing elit. Saepe repellendus itaque in, dolore hic explicabo
+            tenetur odit magnam laborum vitae fugiat maiores eum consequuntur
+            libero id. Repudiandae quia et possimus? Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Saepe repellendus itaque in, dolore
+            hic explicabo tenetur odit magnam laborum vitae fugiat maiores eum
+            consequuntur libero id. Repudiandae quia et possimus? Lorem ipsum
+            dolor, sit amet consectetur adipisicing elit. Saepe repellendus
+            itaque in, dolore hic explicabo tenetur odit magnam laborum vitae
           </div>
         </TabItem>
 
@@ -109,7 +167,7 @@ body {
   justify-content: center;
   align-content: center;
   background: #f3f3f3;
-  height: 98vh;
+  height: 150vh;
   box-sizing: border-box;
 }
 
@@ -136,8 +194,8 @@ body {
 }
 
 .tab-wrapper {
-  height: 610px;
-  width: 1000px;
+  /* height: 610px; */
+  width: 900px;
   box-shadow: rgba(0, 0, 0, 0.096) 10px 10px 90px;
 }
 

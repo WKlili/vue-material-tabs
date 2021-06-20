@@ -65,6 +65,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    noTouch: Boolean,
   },
 
   data: () => ({
@@ -103,7 +104,7 @@ export default {
     getTheme() {
       if (typeof this.theme === "string") {
         return $themes[this.theme] || $themes.default;
-      } else if (typeof this.theme === "object" && this.theme !== null) {
+      } else if (typeof this.theme === "object" && this.theme) {
         return this.theme;
       }
       return $themes.default;
@@ -124,10 +125,7 @@ export default {
   },
 
   mounted() {
-    this.activeTabItem({
-      tabItem: this.navItems[0],
-      byUser: false,
-    });
+    this.activeTabItem(this.navItems[0]);
   },
 
   methods: {
@@ -148,7 +146,7 @@ export default {
     },
 
     isTabItemComponent({ $options }) {
-      return $options?._componentTag === "TabItem";
+      return $options?.name === "TabItem";
     },
 
     setNavItem({ model, name, disabled, $slots }) {
@@ -161,24 +159,22 @@ export default {
       this.tabItemIndexes.last = this.navItems.length - 1;
     },
 
-    activeTabItem({ tabItem, byUser }) {
+    activeTabItem(tabItem) {
       try {
-        if (!tabItem.disabled) {
+        if (!tabItem?.disabled) {
           this.tabItemActive = tabItem;
           this.$emit("input", tabItem?.name);
-          byUser && this.$emit("change", tabItem?.name);
         }
-      } catch {}
+      } catch {
+        console.warn("An error occurred in active tab.");
+      }
     },
 
     disableTabItem(tabItemIndex) {
       const { current, last } = this.tabItemIndexes;
       if (tabItemIndex === current) {
         const nextTabItem = current === last ? current - 1 : current + 1;
-        this.activeTabItem({
-          tabItem: this.navItems[nextTabItem],
-          byUser: true,
-        });
+        this.activeTabItem(this.navItems[nextTabItem]);
       }
     },
 
@@ -188,14 +184,16 @@ export default {
     },
 
     onTouchSlide(to) {
-      let tabItem;
-      const { current, last } = this.tabItemIndexes;
-      if (to === "next" && current < last) {
-        tabItem = this.navItems[current + 1];
-      } else if (to === "prev" && current > 0) {
-        tabItem = this.navItems[current - 1];
+      if (!this.noTouch) {
+        let tabItem;
+        const { current, last } = this.tabItemIndexes;
+        if (to === "next" && current < last) {
+          tabItem = this.navItems[current + 1];
+        } else if (to === "prev" && current > 0) {
+          tabItem = this.navItems[current - 1];
+        }
+        tabItem && this.activeTabItem(tabItem);
       }
-      tabItem && this.activeTabItem({ tabItem, byUser: true });
     },
 
     findIndexTab(tab) {
@@ -212,18 +210,16 @@ export default {
   border-radius: 0.23rem;
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 .tabs__content {
   display: flex;
   position: relative;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
-  flex: 1 100%;
+  overflow: hidden;
 }
 
 .tabs--vertical {

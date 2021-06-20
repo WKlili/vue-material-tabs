@@ -131,6 +131,7 @@ You can create your own personalized themes, passing an object with the properti
 | slide         | Boolean - Object | false     | Enable/disable slide or set object with props.    |
 | navAuto       | Boolean          | false     | Set nav auto items.                               |
 | navSlider     | Boolean          | true      | Enable/disable slider under nav item.             |
+| noTouch       | Boolean          | false     | Enable/disable slider tabs by touch               |
 
 ### Slots
 
@@ -140,10 +141,9 @@ You can create your own personalized themes, passing an object with the properti
 
 ### Events
 
-| Name   | Description                                      |
-| ------ | ------------------------------------------------ |
-| input  | Emitted when tab is changed.                     |
-| change | Emitted when tab is changed by user interaction. |
+| Name  | Description                  |
+| ----- | ---------------------------- |
+| input | Emitted when tab is changed. |
 
 ## TabItem
 

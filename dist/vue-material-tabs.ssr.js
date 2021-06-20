@@ -487,6 +487,11 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
     },
     orientation: function orientation() {
       return this.vertical ? "portrait" : "landscape";
+    },
+    slider: function slider() {
+      var _this$$refs;
+
+      return (_this$$refs = this.$refs) === null || _this$$refs === void 0 ? void 0 : _this$$refs.slider;
     }
   },
   watch: {
@@ -506,20 +511,15 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
   },
   methods: {
     select: function select(navItem) {
-      if (!(navItem !== null && navItem !== void 0 && navItem.disabled)) {
-        this.$emit("select", {
-          tabItem: navItem,
-          byUser: true
-        });
-      }
+      this.$emit("select", navItem);
     },
     sliderHandler: function sliderHandler() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this$$refs, _this$$refs2, _this$$refs2$_this$ta;
+        var _this$$refs2, _this$$refs3, _this$$refs3$_this$ta;
 
-        var navItemsElement, _this$getElementRect, navItemsLeft, navItemsTop, navActiveElement, _this$getElementRect2, navActiveWidth, navActiveHeight, navActiveLeft, navActiveTop;
+        var navItemsElement, _this$getElementRect, navItemsLeft, navItemsTop, navActiveElement, _this$getElementRect2, navActiveWidth, navActiveHeight, navActiveLeft, navActiveTop, _this$slider;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -529,30 +529,33 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
                 return _this.$nextTick();
 
               case 2:
-                navItemsElement = (_this$$refs = _this.$refs) === null || _this$$refs === void 0 ? void 0 : _this$$refs.navItems;
+                navItemsElement = (_this$$refs2 = _this.$refs) === null || _this$$refs2 === void 0 ? void 0 : _this$$refs2.navItems;
                 _this$getElementRect = _this.getElementRect({
                   el: navItemsElement,
                   prefix: "navItems"
                 }), navItemsLeft = _this$getElementRect.navItemsLeft, navItemsTop = _this$getElementRect.navItemsTop;
-                navActiveElement = (_this$$refs2 = _this.$refs) === null || _this$$refs2 === void 0 ? void 0 : (_this$$refs2$_this$ta = _this$$refs2[_this.tabItemActive.model]) === null || _this$$refs2$_this$ta === void 0 ? void 0 : _this$$refs2$_this$ta[0];
+                navActiveElement = (_this$$refs3 = _this.$refs) === null || _this$$refs3 === void 0 ? void 0 : (_this$$refs3$_this$ta = _this$$refs3[_this.tabItemActive.model]) === null || _this$$refs3$_this$ta === void 0 ? void 0 : _this$$refs3$_this$ta[0];
                 _this$getElementRect2 = _this.getElementRect({
                   el: navActiveElement,
                   prefix: "navActive"
                 }), navActiveWidth = _this$getElementRect2.navActiveWidth, navActiveHeight = _this$getElementRect2.navActiveHeight, navActiveLeft = _this$getElementRect2.navActiveLeft, navActiveTop = _this$getElementRect2.navActiveTop;
-                Object.assign(_this.$refs.slider.style, {
-                  portrait: {
-                    height: "".concat(navActiveHeight, "px"),
-                    top: "".concat(navActiveTop - navItemsTop, "px"),
-                    width: "",
-                    left: ""
-                  },
-                  landscape: {
-                    width: "".concat(navActiveWidth, "px"),
-                    left: "".concat(navActiveLeft - navItemsLeft, "px"),
-                    height: "",
-                    top: ""
-                  }
-                }[_this.orientation]);
+
+                if (_this.slider) {
+                  Object.assign((_this$slider = _this.slider) === null || _this$slider === void 0 ? void 0 : _this$slider.style, {
+                    portrait: {
+                      height: "".concat(navActiveHeight, "px"),
+                      top: "".concat(navActiveTop - navItemsTop, "px"),
+                      width: "",
+                      left: ""
+                    },
+                    landscape: {
+                      width: "".concat(navActiveWidth, "px"),
+                      left: "".concat(navActiveLeft - navItemsLeft, "px"),
+                      height: "",
+                      top: ""
+                    }
+                  }[_this.orientation]);
+                }
 
               case 7:
               case "end":
@@ -563,9 +566,9 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
       }))();
     },
     setPagination: function setPagination() {
-      var _this$$refs3, _this$$refs4;
+      var _this$$refs4, _this$$refs5;
 
-      var navItemsElement = (_this$$refs3 = this.$refs) === null || _this$$refs3 === void 0 ? void 0 : _this$$refs3.navItems;
+      var navItemsElement = (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.navItems;
 
       var _this$getElementRect3 = this.getElementRect({
         el: navItemsElement,
@@ -574,7 +577,7 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
           navItemsWidth = _this$getElementRect3.navItemsWidth;
 
       var _this$getElementRect4 = this.getElementRect({
-        el: (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.nav,
+        el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : _this$$refs5.nav,
         prefix: "nav"
       }),
           navWidth = _this$getElementRect4.navWidth,
@@ -640,10 +643,10 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
       }
     },
     paginationCollapse: function paginationCollapse() {
-      var _this$$refs5, _this$$refs5$this$tab, _this$$refs6;
+      var _this$$refs6, _this$$refs6$this$tab, _this$$refs7;
 
       var _this$getElementRect5 = this.getElementRect({
-        el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : (_this$$refs5$this$tab = _this$$refs5[this.tabItemActive.model]) === null || _this$$refs5$this$tab === void 0 ? void 0 : _this$$refs5$this$tab[0],
+        el: (_this$$refs6 = this.$refs) === null || _this$$refs6 === void 0 ? void 0 : (_this$$refs6$this$tab = _this$$refs6[this.tabItemActive.model]) === null || _this$$refs6$this$tab === void 0 ? void 0 : _this$$refs6$this$tab[0],
         prefix: "navActive"
       }),
           navActiveRight = _this$getElementRect5.navActiveRight,
@@ -654,7 +657,7 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
           navActiveHeight = _this$getElementRect5.navActiveHeight;
 
       var _this$getElementRect6 = this.getElementRect({
-        el: (_this$$refs6 = this.$refs) === null || _this$$refs6 === void 0 ? void 0 : _this$$refs6.nav,
+        el: (_this$$refs7 = this.$refs) === null || _this$$refs7 === void 0 ? void 0 : _this$$refs7.nav,
         prefix: "nav"
       }),
           navRight = _this$getElementRect6.navRight,
@@ -722,7 +725,7 @@ var __vue_component__$3 = /*#__PURE__*/normalizeComponent({
           slider = _this$theme.slider;
       this.$el.style.background = nav;
       this.$refs.navItems.style.color = navItem;
-      this.$refs.slider.style.background = slider;
+      if (this.slider) this.slider.style.background = slider;
     },
     getActiveColor: function getActiveColor(_ref7) {
       var model = _ref7.model;
@@ -753,7 +756,7 @@ var __vue_render__$2 = function __vue_render__() {
       expression: "resizable"
     }],
     class: _vm.classes
-  }, [_vm._ssrNode("<div class=\"tab__pagination__prev\" data-v-e9153106>", "</div>", [_vm.pagination.has ? _c('Btn', {
+  }, [_vm._ssrNode("<div class=\"tab__pagination__prev\" data-v-dd4668fe>", "</div>", [_vm.pagination.has ? _c('Btn', {
     attrs: {
       "disabled": !_vm.paginateIndicator.prev
     },
@@ -771,7 +774,7 @@ var __vue_render__$2 = function __vue_render__() {
     }],
     ref: "nav",
     staticClass: "tab__nav"
-  }, [_vm._ssrNode("<ul class=\"tab__nav__items\"" + _vm._ssrStyle(null, _vm.styles, null) + " data-v-e9153106>", "</ul>", [_vm._l(_vm.navItems, function (navItem) {
+  }, [_vm._ssrNode("<ul class=\"tab__nav__items\"" + _vm._ssrStyle(null, _vm.styles, null) + " data-v-dd4668fe>", "</ul>", [_vm._l(_vm.navItems, function (navItem) {
     return _c('li', {
       directives: [{
         name: "ripple",
@@ -800,7 +803,7 @@ var __vue_render__$2 = function __vue_render__() {
         "name": navItem.name
       }
     })], 1);
-  }), _vm._ssrNode(" " + (_vm.navSlider ? "<hr class=\"tab__slider\" data-v-e9153106>" : "<!---->"))], 2)]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"tab__pagination__next\" data-v-e9153106>", "</div>", [_vm.pagination.has ? _c('Btn', {
+  }), _vm._ssrNode(" " + (_vm.navSlider ? "<hr class=\"tab__slider\" data-v-dd4668fe>" : "<!---->"))], 2)]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"tab__pagination__next\" data-v-dd4668fe>", "</div>", [_vm.pagination.has ? _c('Btn', {
     attrs: {
       "disabled": !_vm.paginateIndicator.next
     },
@@ -817,11 +820,11 @@ var __vue_staticRenderFns__$2 = [];
 
 var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-e9153106_0", {
-    source: ".tab__pagination[data-v-e9153106]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-e9153106],.tab__pagination__next[data-v-e9153106]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-e9153106] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-e9153106]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-e9153106]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-e9153106]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-e9153106]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-e9153106]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-e9153106]{background:#6969694f}.tab__slider[data-v-e9153106]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-e9153106]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-e9153106]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-e9153106]{padding:0;margin:0}.tab__pagination--vertical[data-v-e9153106] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-e9153106] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-e9153106]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-e9153106]{flex:1 auto}",
+  inject("data-v-dd4668fe_0", {
+    source: ".tab__pagination[data-v-dd4668fe]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-dd4668fe],.tab__pagination__next[data-v-dd4668fe]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-dd4668fe] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-dd4668fe]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-dd4668fe]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-dd4668fe]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-dd4668fe]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-dd4668fe]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-dd4668fe]{background:#6969694f}.tab__slider[data-v-dd4668fe]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-dd4668fe]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-dd4668fe]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-dd4668fe]{padding:0;margin:0}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-dd4668fe]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-dd4668fe]{flex:1 auto}",
     map: undefined,
     media: undefined
-  }), inject("data-v-e9153106_1", {
+  }), inject("data-v-dd4668fe_1", {
     source: ".ripple{z-index:2;background-color:hsla(0,0%,100%,.23);border-radius:50%;position:absolute;transform:scale(0);animation:ripple .6s linear}@keyframes ripple{to{transform:scale(2.5);opacity:0}}",
     map: undefined,
     media: undefined
@@ -830,10 +833,10 @@ var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$2 = "data-v-e9153106";
+var __vue_scope_id__$2 = "data-v-dd4668fe";
 /* module identifier */
 
-var __vue_module_identifier__$2 = "data-v-e9153106";
+var __vue_module_identifier__$2 = "data-v-dd4668fe";
 /* functional template */
 
 var __vue_is_functional_template__$2 = false;
@@ -895,7 +898,8 @@ var $themes = {
     navSlider: {
       type: Boolean,
       default: true
-    }
+    },
+    noTouch: Boolean
   },
   data: function data() {
     return {
@@ -932,7 +936,7 @@ var $themes = {
     getTheme: function getTheme() {
       if (typeof this.theme === "string") {
         return $themes[this.theme] || $themes.default;
-      } else if (_typeof(this.theme) === "object" && this.theme !== null) {
+      } else if (_typeof(this.theme) === "object" && this.theme) {
         return this.theme;
       }
 
@@ -952,10 +956,7 @@ var $themes = {
     }
   },
   mounted: function mounted() {
-    this.activeTabItem({
-      tabItem: this.navItems[0],
-      byUser: false
-    });
+    this.activeTabItem(this.navItems[0]);
   },
   methods: {
     addTabItem: function addTabItem(tabItemInstance) {
@@ -974,7 +975,7 @@ var $themes = {
     },
     isTabItemComponent: function isTabItemComponent(_ref) {
       var $options = _ref.$options;
-      return ($options === null || $options === void 0 ? void 0 : $options._componentTag) === "TabItem";
+      return ($options === null || $options === void 0 ? void 0 : $options.name) === "TabItem";
     },
     setNavItem: function setNavItem(_ref2) {
       var _$slots$name;
@@ -991,17 +992,15 @@ var $themes = {
       });
       this.tabItemIndexes.last = this.navItems.length - 1;
     },
-    activeTabItem: function activeTabItem(_ref3) {
-      var tabItem = _ref3.tabItem,
-          byUser = _ref3.byUser;
-
+    activeTabItem: function activeTabItem(tabItem) {
       try {
-        if (!tabItem.disabled) {
+        if (!(tabItem !== null && tabItem !== void 0 && tabItem.disabled)) {
           this.tabItemActive = tabItem;
           this.$emit("input", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
-          byUser && this.$emit("change", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
         }
-      } catch (_unused) {}
+      } catch (_unused) {
+        console.warn("An error occurred in active tab.");
+      }
     },
     disableTabItem: function disableTabItem(tabItemIndex) {
       var _this$tabItemIndexes = this.tabItemIndexes,
@@ -1010,10 +1009,7 @@ var $themes = {
 
       if (tabItemIndex === current) {
         var nextTabItem = current === last ? current - 1 : current + 1;
-        this.activeTabItem({
-          tabItem: this.navItems[nextTabItem],
-          byUser: true
-        });
+        this.activeTabItem(this.navItems[nextTabItem]);
       }
     },
     setTabItemTransitionSide: function setTabItemTransitionSide() {
@@ -1023,21 +1019,20 @@ var $themes = {
       this.slideSide = current > previous ? "right" : "left";
     },
     onTouchSlide: function onTouchSlide(to) {
-      var tabItem;
-      var _this$tabItemIndexes3 = this.tabItemIndexes,
-          current = _this$tabItemIndexes3.current,
-          last = _this$tabItemIndexes3.last;
+      if (!this.noTouch) {
+        var tabItem;
+        var _this$tabItemIndexes3 = this.tabItemIndexes,
+            current = _this$tabItemIndexes3.current,
+            last = _this$tabItemIndexes3.last;
 
-      if (to === "next" && current < last) {
-        tabItem = this.navItems[current + 1];
-      } else if (to === "prev" && current > 0) {
-        tabItem = this.navItems[current - 1];
+        if (to === "next" && current < last) {
+          tabItem = this.navItems[current + 1];
+        } else if (to === "prev" && current > 0) {
+          tabItem = this.navItems[current - 1];
+        }
+
+        tabItem && this.activeTabItem(tabItem);
       }
-
-      tabItem && this.activeTabItem({
-        tabItem: tabItem,
-        byUser: true
-      });
     },
     findIndexTab: function findIndexTab(tab) {
       return this.tabItems.findIndex(function (el) {
@@ -1088,8 +1083,8 @@ var __vue_staticRenderFns__$1 = [];
 
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-62180c76_0", {
-    source: ".tabs[data-v-62180c76]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%;overflow:hidden}.tabs__content[data-v-62180c76]{display:flex;position:relative;overflow:hidden;justify-content:center;align-items:center;height:100%;width:100%;flex:1 100%}.tabs--vertical[data-v-62180c76]{flex-direction:row}",
+  inject("data-v-4ff86a0d_0", {
+    source: ".tabs[data-v-4ff86a0d]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%}.tabs__content[data-v-4ff86a0d]{display:flex;position:relative;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden}.tabs--vertical[data-v-4ff86a0d]{flex-direction:row}",
     map: undefined,
     media: undefined
   });
@@ -1097,10 +1092,10 @@ var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__$1 = "data-v-62180c76";
+var __vue_scope_id__$1 = "data-v-4ff86a0d";
 /* module identifier */
 
-var __vue_module_identifier__$1 = "data-v-62180c76";
+var __vue_module_identifier__$1 = "data-v-4ff86a0d";
 /* functional template */
 
 var __vue_is_functional_template__$1 = false;
@@ -1186,6 +1181,14 @@ var script = {
       payload && ((_this$tabs = this.tabs) === null || _this$tabs === void 0 ? void 0 : _this$tabs.disableTabItem(this.ownNavItemIndex));
       this.tabs.navItems[this.ownNavItemIndex].disabled = payload;
     }
+  },
+  methods: {
+    beforeEnter: function beforeEnter(el) {
+      el.style.position = "relative";
+    },
+    leave: function leave(el) {
+      el.style.position = "absolute";
+    }
   }
 };/* script */
 var __vue_script__ = script;
@@ -1201,6 +1204,10 @@ var __vue_render__ = function __vue_render__() {
   return _c('transition', {
     attrs: {
       "name": _vm.slideDirection
+    },
+    on: {
+      "beforeEnter": _vm.beforeEnter,
+      "leave": _vm.leave
     }
   }, [_c('div', {
     directives: [{
@@ -1221,8 +1228,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-e5c03ade_0", {
-    source: ".tab-item[data-v-e5c03ade]{position:absolute;top:0;left:0;z-index:1;height:100%;width:100%;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-e5c03ade],.slide-right-leave-to[data-v-e5c03ade]{transform:translateX(-100%)}.slide-left-leave-to[data-v-e5c03ade],.slide-right-enter[data-v-e5c03ade]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-e5c03ade],.slide-top-enter[data-v-e5c03ade]{transform:translateY(-100%)}.slide-bottom-enter[data-v-e5c03ade],.slide-top-leave-to[data-v-e5c03ade]{transform:translateY(100%)}",
+  inject("data-v-aec0b920_0", {
+    source: ".tab-item[data-v-aec0b920]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-aec0b920],.slide-right-leave-to[data-v-aec0b920]{transform:translateX(-100%)}.slide-left-leave-to[data-v-aec0b920],.slide-right-enter[data-v-aec0b920]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-aec0b920],.slide-top-enter[data-v-aec0b920]{transform:translateY(-100%)}.slide-bottom-enter[data-v-aec0b920],.slide-top-leave-to[data-v-aec0b920]{transform:translateY(100%)}",
     map: undefined,
     media: undefined
   });
@@ -1230,10 +1237,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-e5c03ade";
+var __vue_scope_id__ = "data-v-aec0b920";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-e5c03ade";
+var __vue_module_identifier__ = "data-v-aec0b920";
 /* functional template */
 
 var __vue_is_functional_template__ = false;

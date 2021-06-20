@@ -403,6 +403,12 @@ var script$2 = {
 
     orientation() {
       return this.vertical ? "portrait" : "landscape";
+    },
+
+    slider() {
+      var _this$$refs;
+
+      return (_this$$refs = this.$refs) === null || _this$$refs === void 0 ? void 0 : _this$$refs.slider;
     }
 
   },
@@ -428,19 +434,14 @@ var script$2 = {
 
   methods: {
     select(navItem) {
-      if (!(navItem !== null && navItem !== void 0 && navItem.disabled)) {
-        this.$emit("select", {
-          tabItem: navItem,
-          byUser: true
-        });
-      }
+      this.$emit("select", navItem);
     },
 
     async sliderHandler() {
-      var _this$$refs, _this$$refs2, _this$$refs2$this$tab;
+      var _this$$refs2, _this$$refs3, _this$$refs3$this$tab;
 
       await this.$nextTick();
-      const navItemsElement = (_this$$refs = this.$refs) === null || _this$$refs === void 0 ? void 0 : _this$$refs.navItems;
+      const navItemsElement = (_this$$refs2 = this.$refs) === null || _this$$refs2 === void 0 ? void 0 : _this$$refs2.navItems;
       const {
         navItemsLeft,
         navItemsTop
@@ -448,7 +449,7 @@ var script$2 = {
         el: navItemsElement,
         prefix: "navItems"
       });
-      const navActiveElement = (_this$$refs2 = this.$refs) === null || _this$$refs2 === void 0 ? void 0 : (_this$$refs2$this$tab = _this$$refs2[this.tabItemActive.model]) === null || _this$$refs2$this$tab === void 0 ? void 0 : _this$$refs2$this$tab[0];
+      const navActiveElement = (_this$$refs3 = this.$refs) === null || _this$$refs3 === void 0 ? void 0 : (_this$$refs3$this$tab = _this$$refs3[this.tabItemActive.model]) === null || _this$$refs3$this$tab === void 0 ? void 0 : _this$$refs3$this$tab[0];
       const {
         navActiveWidth,
         navActiveHeight,
@@ -458,26 +459,31 @@ var script$2 = {
         el: navActiveElement,
         prefix: "navActive"
       });
-      Object.assign(this.$refs.slider.style, {
-        portrait: {
-          height: `${navActiveHeight}px`,
-          top: `${navActiveTop - navItemsTop}px`,
-          width: "",
-          left: ""
-        },
-        landscape: {
-          width: `${navActiveWidth}px`,
-          left: `${navActiveLeft - navItemsLeft}px`,
-          height: "",
-          top: ""
-        }
-      }[this.orientation]);
+
+      if (this.slider) {
+        var _this$slider;
+
+        Object.assign((_this$slider = this.slider) === null || _this$slider === void 0 ? void 0 : _this$slider.style, {
+          portrait: {
+            height: `${navActiveHeight}px`,
+            top: `${navActiveTop - navItemsTop}px`,
+            width: "",
+            left: ""
+          },
+          landscape: {
+            width: `${navActiveWidth}px`,
+            left: `${navActiveLeft - navItemsLeft}px`,
+            height: "",
+            top: ""
+          }
+        }[this.orientation]);
+      }
     },
 
     setPagination() {
-      var _this$$refs3, _this$$refs4;
+      var _this$$refs4, _this$$refs5;
 
-      const navItemsElement = (_this$$refs3 = this.$refs) === null || _this$$refs3 === void 0 ? void 0 : _this$$refs3.navItems;
+      const navItemsElement = (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.navItems;
       const {
         navItemsWidth
       } = this.getElementRect({
@@ -488,7 +494,7 @@ var script$2 = {
         navWidth,
         navHeight
       } = this.getElementRect({
-        el: (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.nav,
+        el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : _this$$refs5.nav,
         prefix: "nav"
       });
       const navItemsHeight = [...(navItemsElement === null || navItemsElement === void 0 ? void 0 : navItemsElement.children)].slice(0, -1).map(el => el.offsetHeight).reduce((a, c) => Math.abs(a + c), 0);
@@ -544,7 +550,7 @@ var script$2 = {
     },
 
     paginationCollapse() {
-      var _this$$refs5, _this$$refs5$this$tab, _this$$refs6;
+      var _this$$refs6, _this$$refs6$this$tab, _this$$refs7;
 
       const {
         navActiveRight,
@@ -554,7 +560,7 @@ var script$2 = {
         navActiveWidth,
         navActiveHeight
       } = this.getElementRect({
-        el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : (_this$$refs5$this$tab = _this$$refs5[this.tabItemActive.model]) === null || _this$$refs5$this$tab === void 0 ? void 0 : _this$$refs5$this$tab[0],
+        el: (_this$$refs6 = this.$refs) === null || _this$$refs6 === void 0 ? void 0 : (_this$$refs6$this$tab = _this$$refs6[this.tabItemActive.model]) === null || _this$$refs6$this$tab === void 0 ? void 0 : _this$$refs6$this$tab[0],
         prefix: "navActive"
       });
       const {
@@ -563,7 +569,7 @@ var script$2 = {
         navTop,
         navBottom
       } = this.getElementRect({
-        el: (_this$$refs6 = this.$refs) === null || _this$$refs6 === void 0 ? void 0 : _this$$refs6.nav,
+        el: (_this$$refs7 = this.$refs) === null || _this$$refs7 === void 0 ? void 0 : _this$$refs7.nav,
         prefix: "nav"
       });
       const {
@@ -625,7 +631,7 @@ var script$2 = {
       } = this.theme;
       this.$el.style.background = nav;
       this.$refs.navItems.style.color = navItem;
-      this.$refs.slider.style.background = slider;
+      if (this.slider) this.slider.style.background = slider;
     },
 
     getActiveColor({
@@ -735,11 +741,11 @@ var __vue_staticRenderFns__$2 = [];
 
 const __vue_inject_styles__$2 = function (inject) {
   if (!inject) return;
-  inject("data-v-e9153106_0", {
-    source: ".tab__pagination[data-v-e9153106]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-e9153106],.tab__pagination__next[data-v-e9153106]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-e9153106] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-e9153106]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-e9153106]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-e9153106]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-e9153106]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-e9153106]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-e9153106]{background:#6969694f}.tab__slider[data-v-e9153106]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-e9153106]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-e9153106]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-e9153106]{padding:0;margin:0}.tab__pagination--vertical[data-v-e9153106] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-e9153106] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-e9153106]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-e9153106]{flex:1 auto}",
+  inject("data-v-dd4668fe_0", {
+    source: ".tab__pagination[data-v-dd4668fe]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-dd4668fe],.tab__pagination__next[data-v-dd4668fe]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-dd4668fe] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-dd4668fe]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-dd4668fe]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-dd4668fe]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-dd4668fe]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-dd4668fe]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-dd4668fe]{background:#6969694f}.tab__slider[data-v-dd4668fe]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-dd4668fe]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-dd4668fe]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-dd4668fe]{padding:0;margin:0}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-dd4668fe]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-dd4668fe]{flex:1 auto}",
     map: undefined,
     media: undefined
-  }), inject("data-v-e9153106_1", {
+  }), inject("data-v-dd4668fe_1", {
     source: ".ripple{z-index:2;background-color:hsla(0,0%,100%,.23);border-radius:50%;position:absolute;transform:scale(0);animation:ripple .6s linear}@keyframes ripple{to{transform:scale(2.5);opacity:0}}",
     map: undefined,
     media: undefined
@@ -748,7 +754,7 @@ const __vue_inject_styles__$2 = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__$2 = "data-v-e9153106";
+const __vue_scope_id__$2 = "data-v-dd4668fe";
 /* module identifier */
 
 const __vue_module_identifier__$2 = undefined;
@@ -820,7 +826,8 @@ var script$1 = {
     navSlider: {
       type: Boolean,
       default: true
-    }
+    },
+    noTouch: Boolean
   },
   data: () => ({
     slideSide: "",
@@ -857,7 +864,7 @@ var script$1 = {
     getTheme() {
       if (typeof this.theme === "string") {
         return $themes[this.theme] || $themes.default;
-      } else if (typeof this.theme === "object" && this.theme !== null) {
+      } else if (typeof this.theme === "object" && this.theme) {
         return this.theme;
       }
 
@@ -880,10 +887,7 @@ var script$1 = {
   },
 
   mounted() {
-    this.activeTabItem({
-      tabItem: this.navItems[0],
-      byUser: false
-    });
+    this.activeTabItem(this.navItems[0]);
   },
 
   methods: {
@@ -906,7 +910,7 @@ var script$1 = {
     isTabItemComponent({
       $options
     }) {
-      return ($options === null || $options === void 0 ? void 0 : $options._componentTag) === "TabItem";
+      return ($options === null || $options === void 0 ? void 0 : $options.name) === "TabItem";
     },
 
     setNavItem({
@@ -926,17 +930,15 @@ var script$1 = {
       this.tabItemIndexes.last = this.navItems.length - 1;
     },
 
-    activeTabItem({
-      tabItem,
-      byUser
-    }) {
+    activeTabItem(tabItem) {
       try {
-        if (!tabItem.disabled) {
+        if (!(tabItem !== null && tabItem !== void 0 && tabItem.disabled)) {
           this.tabItemActive = tabItem;
           this.$emit("input", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
-          byUser && this.$emit("change", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
         }
-      } catch {}
+      } catch {
+        console.warn("An error occurred in active tab.");
+      }
     },
 
     disableTabItem(tabItemIndex) {
@@ -947,10 +949,7 @@ var script$1 = {
 
       if (tabItemIndex === current) {
         const nextTabItem = current === last ? current - 1 : current + 1;
-        this.activeTabItem({
-          tabItem: this.navItems[nextTabItem],
-          byUser: true
-        });
+        this.activeTabItem(this.navItems[nextTabItem]);
       }
     },
 
@@ -963,22 +962,21 @@ var script$1 = {
     },
 
     onTouchSlide(to) {
-      let tabItem;
-      const {
-        current,
-        last
-      } = this.tabItemIndexes;
+      if (!this.noTouch) {
+        let tabItem;
+        const {
+          current,
+          last
+        } = this.tabItemIndexes;
 
-      if (to === "next" && current < last) {
-        tabItem = this.navItems[current + 1];
-      } else if (to === "prev" && current > 0) {
-        tabItem = this.navItems[current - 1];
+        if (to === "next" && current < last) {
+          tabItem = this.navItems[current + 1];
+        } else if (to === "prev" && current > 0) {
+          tabItem = this.navItems[current - 1];
+        }
+
+        tabItem && this.activeTabItem(tabItem);
       }
-
-      tabItem && this.activeTabItem({
-        tabItem,
-        byUser: true
-      });
     },
 
     findIndexTab(tab) {
@@ -1031,8 +1029,8 @@ var __vue_staticRenderFns__$1 = [];
 
 const __vue_inject_styles__$1 = function (inject) {
   if (!inject) return;
-  inject("data-v-62180c76_0", {
-    source: ".tabs[data-v-62180c76]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%;overflow:hidden}.tabs__content[data-v-62180c76]{display:flex;position:relative;overflow:hidden;justify-content:center;align-items:center;height:100%;width:100%;flex:1 100%}.tabs--vertical[data-v-62180c76]{flex-direction:row}",
+  inject("data-v-4ff86a0d_0", {
+    source: ".tabs[data-v-4ff86a0d]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%}.tabs__content[data-v-4ff86a0d]{display:flex;position:relative;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden}.tabs--vertical[data-v-4ff86a0d]{flex-direction:row}",
     map: undefined,
     media: undefined
   });
@@ -1040,7 +1038,7 @@ const __vue_inject_styles__$1 = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__$1 = "data-v-62180c76";
+const __vue_scope_id__$1 = "data-v-4ff86a0d";
 /* module identifier */
 
 const __vue_module_identifier__$1 = undefined;
@@ -1136,6 +1134,16 @@ var script = {
       this.tabs.navItems[this.ownNavItemIndex].disabled = payload;
     }
 
+  },
+  methods: {
+    beforeEnter(el) {
+      el.style.position = "relative";
+    },
+
+    leave(el) {
+      el.style.position = "absolute";
+    }
+
   }
 };
 
@@ -1153,6 +1161,10 @@ var __vue_render__ = function () {
   return _c('transition', {
     attrs: {
       "name": _vm.slideDirection
+    },
+    on: {
+      "beforeEnter": _vm.beforeEnter,
+      "leave": _vm.leave
     }
   }, [_c('div', {
     directives: [{
@@ -1173,8 +1185,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-e5c03ade_0", {
-    source: ".tab-item[data-v-e5c03ade]{position:absolute;top:0;left:0;z-index:1;height:100%;width:100%;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-e5c03ade],.slide-right-leave-to[data-v-e5c03ade]{transform:translateX(-100%)}.slide-left-leave-to[data-v-e5c03ade],.slide-right-enter[data-v-e5c03ade]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-e5c03ade],.slide-top-enter[data-v-e5c03ade]{transform:translateY(-100%)}.slide-bottom-enter[data-v-e5c03ade],.slide-top-leave-to[data-v-e5c03ade]{transform:translateY(100%)}",
+  inject("data-v-aec0b920_0", {
+    source: ".tab-item[data-v-aec0b920]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-aec0b920],.slide-right-leave-to[data-v-aec0b920]{transform:translateX(-100%)}.slide-left-leave-to[data-v-aec0b920],.slide-right-enter[data-v-aec0b920]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-aec0b920],.slide-top-enter[data-v-aec0b920]{transform:translateY(-100%)}.slide-bottom-enter[data-v-aec0b920],.slide-top-leave-to[data-v-aec0b920]{transform:translateY(100%)}",
     map: undefined,
     media: undefined
   });
@@ -1182,7 +1194,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-e5c03ade";
+const __vue_scope_id__ = "data-v-aec0b920";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
