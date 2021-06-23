@@ -11,8 +11,6 @@
 </template>
 
 <script>
-const crypto = require("crypto");
-
 export default {
   name: "TabItem",
 
@@ -27,7 +25,9 @@ export default {
 
   data: () => ({
     activeModel: "",
-    model: crypto.randomBytes(10).toString("hex"),
+    model: Math.random()
+      .toString("16")
+      .substring("2"),
   }),
 
   mounted() {
