@@ -1116,8 +1116,6 @@ var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
 //
 //
 //
-var crypto = require("crypto");
-
 var script = {
   name: "TabItem",
   props: {
@@ -1130,7 +1128,7 @@ var script = {
   data: function data() {
     return {
       activeModel: "",
-      model: crypto.randomBytes(10).toString("hex")
+      model: Math.random().toString("16").substring("2")
     };
   },
   mounted: function mounted() {
@@ -1228,8 +1226,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-aec0b920_0", {
-    source: ".tab-item[data-v-aec0b920]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-aec0b920],.slide-right-leave-to[data-v-aec0b920]{transform:translateX(-100%)}.slide-left-leave-to[data-v-aec0b920],.slide-right-enter[data-v-aec0b920]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-aec0b920],.slide-top-enter[data-v-aec0b920]{transform:translateY(-100%)}.slide-bottom-enter[data-v-aec0b920],.slide-top-leave-to[data-v-aec0b920]{transform:translateY(100%)}",
+  inject("data-v-1650ba80_0", {
+    source: ".tab-item[data-v-1650ba80]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-1650ba80],.slide-right-leave-to[data-v-1650ba80]{transform:translateX(-100%)}.slide-left-leave-to[data-v-1650ba80],.slide-right-enter[data-v-1650ba80]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-1650ba80],.slide-top-enter[data-v-1650ba80]{transform:translateY(-100%)}.slide-bottom-enter[data-v-1650ba80],.slide-top-leave-to[data-v-1650ba80]{transform:translateY(100%)}",
     map: undefined,
     media: undefined
   });
@@ -1237,10 +1235,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-aec0b920";
+var __vue_scope_id__ = "data-v-1650ba80";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-aec0b920";
+var __vue_module_identifier__ = "data-v-1650ba80";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
