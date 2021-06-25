@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="title">
-      <h1>vue-material-tabs <small>v0.0.4</small></h1>
+      <h1>vue-material-tabs <small>v0.1.5</small></h1>
       <a href="https://github.com/jairoblatt/vue-material-tabs" target="_blank">
         Docs
       </a>
@@ -38,9 +38,11 @@
       <Btn @click="add--">
         Remove
       </Btn>
+
+      <Btn @click="test = !test">Test</Btn>
     </div>
 
-    <div class="tab-wrapper">
+    <div v-if="test" class="tab-wrapper">
       <Tabs
         :vertical="orientation"
         :ripple="ripple"
@@ -137,7 +139,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Vue from "vue";
 import Btn from "./Btn";
@@ -154,6 +155,7 @@ export default Vue.extend({
     slide: true,
     disabled: false,
     add: 15,
+    test: true,
   }),
 });
 </script>
@@ -164,10 +166,10 @@ export default Vue.extend({
 body {
   font-family: "Roboto", sans-serif;
   display: flex;
-  justify-content: center;
-  align-content: center;
+  /* justify-content: center; */
+  /* align-content: center; */
   background: #f3f3f3;
-  height: 150vh;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 

@@ -1,16 +1,17 @@
 # vue-material-tabs
 
-Vue 2 tabs component ❤
+Vue 2 material tabs component ❤
 
 ### [Demo](https://vue-material-tabs.vercel.app/)
 
 ## ⚓ Features
 
-- Pagination of nav and tabs
-- Pagination touchable
-- Vertical support
+- Nav with dynamic pagination.
+- Touchlable pagination.
+- Vertical support.
 - Very flexible and customizable
-- Multiple style themes
+- Multiple style themes.
+- Zero dependencies
 
 ## 🚚 Install
 
@@ -71,7 +72,7 @@ export default {
 </Tabs>
 ```
 
-### 🏞 Themes
+### 👑 Themes
 
 There are some themes available to customize your tab, you can apply them through the "theme" prop.
 
@@ -122,8 +123,8 @@ You can create your own personalized themes, passing an object with the properti
 
 | Name          | type             | Default   | description                                       |
 | ------------- | ---------------- | --------- | ------------------------------------------------- |
-| value         | String           | ''        | The designated model value for the component.     |
-| theme         | String - Object  | 'default' | Apply a custom theme                              |
+| value         | String           | undefined | The designated model value for the component.     |
+| theme         | String - Object  | 'default' | Apply a custom theme.                             |
 | vertical      | Boolean          | false     | Uses a vertical transition when changing windows. |
 | ripple        | Boolean          | true      | Enalbe/disable ripple buttons effects.            |
 | slideDuration | String - Number  | 200       | Set time in ms slide duration.                    |
@@ -131,7 +132,7 @@ You can create your own personalized themes, passing an object with the properti
 | slide         | Boolean - Object | false     | Enable/disable slide or set object with props.    |
 | navAuto       | Boolean          | false     | Set nav auto items.                               |
 | navSlider     | Boolean          | true      | Enable/disable slider under nav item.             |
-| noTouch       | Boolean          | false     | Enable/disable slider tabs by touch               |
+| noTouch       | Boolean          | false     | Enable/disable slider tabs by touch.              |
 
 ### Slots
 

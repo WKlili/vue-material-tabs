@@ -129,14 +129,14 @@ export default {
   },
 
   methods: {
-    addTabItem(tabItemInstance) {
+    register(tabItemInstance) {
       if (this.isTabItemComponent(tabItemInstance)) {
         this.tabItems.push(tabItemInstance);
         this.setNavItem(tabItemInstance);
       }
     },
 
-    removeTabItem(tabItemInstance) {
+    unRegister(tabItemInstance) {
       if (this.isTabItemComponent(tabItemInstance)) {
         this.disableTabItem(tabItemInstance.ownNavItemIndex);
         this.tabItems.splice(this.findIndexTab(tabItemInstance), 1);
@@ -160,13 +160,9 @@ export default {
     },
 
     activeTabItem(tabItem) {
-      try {
-        if (!tabItem?.disabled) {
-          this.tabItemActive = tabItem;
-          this.$emit("input", tabItem?.name);
-        }
-      } catch {
-        console.warn("An error occurred in active tab.");
+      if (!tabItem?.disabled) {
+        this.tabItemActive = tabItem;
+        this.$emit("input", tabItem?.name);
       }
     },
 
@@ -217,8 +213,7 @@ export default {
   position: relative;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
+
   overflow: hidden;
 }
 

@@ -8,7 +8,7 @@
       />
     </div>
     <nav v-touch="onPagination" ref="nav" class="tab__nav">
-      <ul ref="navItems" class="tab__nav__items" :style="styles">
+      <ul ref="navItems" class="tab__nav__items" :style="transform">
         <li
           v-ripple="ripple && !navItem.disabled"
           v-for="navItem in navItems"
@@ -44,6 +44,8 @@ import touch from "./directives/touch";
 import Btn from "./Btn";
 
 export default {
+  inject: ["theme"],
+
   components: {
     Btn,
     VNode: {
@@ -53,8 +55,6 @@ export default {
       },
     },
   },
-
-  inject: ["theme"],
 
   directives: {
     ripple,
@@ -96,18 +96,17 @@ export default {
       };
     },
 
-    styles() {
-      return {
-        transform: `translate${this.vertical ? "Y" : "X"}(-${
-          this.pagination.translate
-        }px)`,
-      };
+    transform() {
+      return `transform: translate${this.vertical ? "Y" : "X"}(-${
+        this.pagination.translate
+      }px)`;
     },
 
     paginateIndicator() {
+      const { translate, maxOffset } = this.pagination;
       return {
-        next: this.pagination.translate < this.pagination.maxOffset,
-        prev: this.pagination.translate > 0,
+        next: translate < maxOffset,
+        prev: translate > 0,
       };
     },
 
@@ -121,8 +120,9 @@ export default {
   },
 
   watch: {
-    // Force recalc the pagination offsets when the orientation/navItems is change;
     navItems: "resizable",
+    // Force recalc the pagination offsets
+    // when the orientation/navItems is change;
     vertical() {
       Object.assign(this.$data, this.$options.data());
       this.resizable();
@@ -143,90 +143,92 @@ export default {
     },
 
     async sliderHandler() {
-      await this.$nextTick();
-      const navItemsElement = this.$refs?.navItems;
-      const { navItemsLeft, navItemsTop } = this.getElementRect({
-        el: navItemsElement,
-        prefix: "navItems",
-      });
+      if (this.tabItemActive?.model) {
+        await this.$nextTick();
+        const navItemsElement = this.$refs?.navItems;
+        const { navItemsLeft, navItemsTop } = this.getElementRect({
+          el: navItemsElement,
+          prefix: "navItems",
+        });
+        const {
+          navActiveWidth,
+          navActiveHeight,
+          navActiveLeft,
+          navActiveTop,
+        } = this.getElementRect({
+          el: this.$refs?.[this.tabItemActive.model]?.[0],
+          prefix: "navActive",
+        });
 
-      const navActiveElement = this.$refs?.[this.tabItemActive.model]?.[0];
-      const {
-        navActiveWidth,
-        navActiveHeight,
-        navActiveLeft,
-        navActiveTop,
-      } = this.getElementRect({
-        el: navActiveElement,
-        prefix: "navActive",
-      });
-
-      if (this.slider) {
-        Object.assign(
-          this.slider?.style,
-          {
-            portrait: {
-              height: `${navActiveHeight}px`,
-              top: `${navActiveTop - navItemsTop}px`,
-              width: "",
-              left: "",
-            },
-            landscape: {
-              width: `${navActiveWidth}px`,
-              left: `${navActiveLeft - navItemsLeft}px`,
-              height: "",
-              top: "",
-            },
-          }[this.orientation]
-        );
+        if (this.slider) {
+          Object.assign(
+            this.slider?.style,
+            {
+              portrait: {
+                height: `${navActiveHeight}px`,
+                top: `${navActiveTop - navItemsTop}px`,
+                width: "",
+                left: "",
+              },
+              landscape: {
+                width: `${navActiveWidth}px`,
+                left: `${navActiveLeft - navItemsLeft}px`,
+                height: "",
+                top: "",
+              },
+            }[this.orientation]
+          );
+        }
       }
     },
 
     setPagination() {
-      const navItemsElement = this.$refs?.navItems;
-      const { navItemsWidth } = this.getElementRect({
-        el: navItemsElement,
-        prefix: "navItems",
-      });
+      if (this.tabItemActive?.model) {
+        const navItemsElement = this.$refs?.navItems;
+        const { navItemsWidth } = this.getElementRect({
+          el: navItemsElement,
+          prefix: "navItems",
+        });
 
-      const { navWidth, navHeight } = this.getElementRect({
-        el: this.$refs?.nav,
-        prefix: "nav",
-      });
+        const { navWidth, navHeight } = this.getElementRect({
+          el: this.$refs?.nav,
+          prefix: "nav",
+        });
 
-      const navItemsHeight = [...navItemsElement?.children]
-        .slice(0, -1)
-        .map((el) => el.offsetHeight)
-        .reduce((a, c) => Math.abs(a + c), 0);
+        const navItemsHeight = [...navItemsElement?.children]
+          .slice(0, -1)
+          .map((el) => el.offsetHeight)
+          .reduce((a, c) => Math.abs(a + c), 0);
 
-      const paginationFactory = (has, maxOffset, minOffset) => {
-        const paginationOffsets = Object.entries({
-          has,
-          maxOffset,
-          minOffset,
-          offset: minOffset,
-        }).map(([k, v]) => [k, Math.abs(v)]);
-        return Object.fromEntries(paginationOffsets);
-      };
+        const paginationFactory = (has, maxOffset, minOffset) => {
+          const paginationOffsets = Object.entries({
+            has,
+            maxOffset,
+            minOffset,
+            offset: minOffset,
+          }).map(([k, v]) => [k, Math.abs(v)]);
+          return Object.fromEntries(paginationOffsets);
+        };
 
-      Object.assign(
-        this.pagination,
-        {
-          portrait: paginationFactory(
-            navItemsHeight > navHeight,
-            navItemsHeight - navHeight,
-            navHeight
-          ),
-          landscape: paginationFactory(
-            navItemsWidth > navWidth,
-            navItemsWidth - navWidth,
-            navWidth
-          ),
-        }[this.orientation]
-      );
+        Object.assign(
+          this.pagination,
+          {
+            portrait: paginationFactory(
+              navItemsHeight > navHeight,
+              navItemsHeight - navHeight,
+              navHeight
+            ),
+            landscape: paginationFactory(
+              navItemsWidth > navWidth,
+              navItemsWidth - navWidth,
+              navWidth
+            ),
+          }[this.orientation]
+        );
 
-      if (this.pagination.maxOffset === 0) {
-        this.pagination.translate = 0;
+        if (this.pagination.maxOffset === 0) {
+          this.pagination.translate = 0;
+        }
       }
     },
 
@@ -265,6 +267,7 @@ export default {
         el: this.$refs?.[this.tabItemActive.model]?.[0],
         prefix: "navActive",
       });
+
       const { navRight, navLeft, navTop, navBottom } = this.getElementRect({
         el: this.$refs?.nav,
         prefix: "nav",
