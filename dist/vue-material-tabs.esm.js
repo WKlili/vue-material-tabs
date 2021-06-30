@@ -136,11 +136,7 @@ var script$3 = {
   inject: ["theme"],
   computed: {
     svgStyle() {
-      var _this$theme;
-
-      return (_this$theme = this.theme) !== null && _this$theme !== void 0 && _this$theme.arrow ? {
-        fill: this.theme.arrow
-      } : "";
+      return `fill: ${this.theme.arrow || ""};`;
     }
 
   }
@@ -312,8 +308,8 @@ var __vue_staticRenderFns__$3 = [];
 
 const __vue_inject_styles__$3 = function (inject) {
   if (!inject) return;
-  inject("data-v-fa702480_0", {
-    source: ".btn[data-v-fa702480]{outline:0;border:none;background:0 0;cursor:pointer}.btn svg[data-v-fa702480]{height:24px;width:24px;fill:rgba(214,213,213,.925)}.btn:disabled svg[data-v-fa702480]{fill:#d6d6d652!important;cursor:default}",
+  inject("data-v-09f24185_0", {
+    source: ".btn[data-v-09f24185]{outline:0;border:none;background:0 0;cursor:pointer}.btn svg[data-v-09f24185]{height:24px;width:24px;fill:rgba(214,213,213,.925)}.btn:disabled svg[data-v-09f24185]{fill:#d6d6d652!important;cursor:default}",
     map: undefined,
     media: undefined
   });
@@ -321,7 +317,7 @@ const __vue_inject_styles__$3 = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__$3 = "data-v-fa702480";
+const __vue_scope_id__$3 = "data-v-09f24185";
 /* module identifier */
 
 const __vue_module_identifier__$3 = undefined;
@@ -339,6 +335,7 @@ const __vue_component__$3 = /*#__PURE__*/normalizeComponent({
 
 //
 var script$2 = {
+  inject: ["theme"],
   components: {
     Btn: __vue_component__$3,
     VNode: {
@@ -350,7 +347,6 @@ var script$2 = {
       }
     }
   },
-  inject: ["theme"],
   directives: {
     ripple,
     resize,
@@ -388,16 +384,18 @@ var script$2 = {
       };
     },
 
-    styles() {
-      return {
-        transform: `translate${this.vertical ? "Y" : "X"}(-${this.pagination.translate}px)`
-      };
+    transform() {
+      return `transform: translate${this.vertical ? "Y" : "X"}(-${this.pagination.translate}px)`;
     },
 
     paginateIndicator() {
+      const {
+        translate,
+        maxOffset
+      } = this.pagination;
       return {
-        next: this.pagination.translate < this.pagination.maxOffset,
-        prev: this.pagination.translate > 0
+        next: translate < maxOffset,
+        prev: translate > 0
       };
     },
 
@@ -413,9 +411,10 @@ var script$2 = {
 
   },
   watch: {
-    // Force recalc the pagination offsets when the orientation/navItems is change;
     navItems: "resizable",
 
+    // Force recalc the pagination offsets
+    // when the orientation/navItems is change;
     vertical() {
       Object.assign(this.$data, this.$options.data());
       this.resizable();
@@ -438,84 +437,91 @@ var script$2 = {
     },
 
     async sliderHandler() {
-      var _this$$refs2, _this$$refs3, _this$$refs3$this$tab;
+      var _this$tabItemActive;
 
-      await this.$nextTick();
-      const navItemsElement = (_this$$refs2 = this.$refs) === null || _this$$refs2 === void 0 ? void 0 : _this$$refs2.navItems;
-      const {
-        navItemsLeft,
-        navItemsTop
-      } = this.getElementRect({
-        el: navItemsElement,
-        prefix: "navItems"
-      });
-      const navActiveElement = (_this$$refs3 = this.$refs) === null || _this$$refs3 === void 0 ? void 0 : (_this$$refs3$this$tab = _this$$refs3[this.tabItemActive.model]) === null || _this$$refs3$this$tab === void 0 ? void 0 : _this$$refs3$this$tab[0];
-      const {
-        navActiveWidth,
-        navActiveHeight,
-        navActiveLeft,
-        navActiveTop
-      } = this.getElementRect({
-        el: navActiveElement,
-        prefix: "navActive"
-      });
+      if ((_this$tabItemActive = this.tabItemActive) !== null && _this$tabItemActive !== void 0 && _this$tabItemActive.model) {
+        var _this$$refs2, _this$$refs3, _this$$refs3$this$tab;
 
-      if (this.slider) {
-        var _this$slider;
+        await this.$nextTick();
+        const navItemsElement = (_this$$refs2 = this.$refs) === null || _this$$refs2 === void 0 ? void 0 : _this$$refs2.navItems;
+        const {
+          navItemsLeft,
+          navItemsTop
+        } = this.getElementRect({
+          el: navItemsElement,
+          prefix: "navItems"
+        });
+        const {
+          navActiveWidth,
+          navActiveHeight,
+          navActiveLeft,
+          navActiveTop
+        } = this.getElementRect({
+          el: (_this$$refs3 = this.$refs) === null || _this$$refs3 === void 0 ? void 0 : (_this$$refs3$this$tab = _this$$refs3[this.tabItemActive.model]) === null || _this$$refs3$this$tab === void 0 ? void 0 : _this$$refs3$this$tab[0],
+          prefix: "navActive"
+        });
 
-        Object.assign((_this$slider = this.slider) === null || _this$slider === void 0 ? void 0 : _this$slider.style, {
-          portrait: {
-            height: `${navActiveHeight}px`,
-            top: `${navActiveTop - navItemsTop}px`,
-            width: "",
-            left: ""
-          },
-          landscape: {
-            width: `${navActiveWidth}px`,
-            left: `${navActiveLeft - navItemsLeft}px`,
-            height: "",
-            top: ""
-          }
-        }[this.orientation]);
+        if (this.slider) {
+          var _this$slider;
+
+          Object.assign((_this$slider = this.slider) === null || _this$slider === void 0 ? void 0 : _this$slider.style, {
+            portrait: {
+              height: `${navActiveHeight}px`,
+              top: `${navActiveTop - navItemsTop}px`,
+              width: "",
+              left: ""
+            },
+            landscape: {
+              width: `${navActiveWidth}px`,
+              left: `${navActiveLeft - navItemsLeft}px`,
+              height: "",
+              top: ""
+            }
+          }[this.orientation]);
+        }
       }
     },
 
     setPagination() {
-      var _this$$refs4, _this$$refs5;
+      var _this$tabItemActive2;
 
-      const navItemsElement = (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.navItems;
-      const {
-        navItemsWidth
-      } = this.getElementRect({
-        el: navItemsElement,
-        prefix: "navItems"
-      });
-      const {
-        navWidth,
-        navHeight
-      } = this.getElementRect({
-        el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : _this$$refs5.nav,
-        prefix: "nav"
-      });
-      const navItemsHeight = [...(navItemsElement === null || navItemsElement === void 0 ? void 0 : navItemsElement.children)].slice(0, -1).map(el => el.offsetHeight).reduce((a, c) => Math.abs(a + c), 0);
+      if ((_this$tabItemActive2 = this.tabItemActive) !== null && _this$tabItemActive2 !== void 0 && _this$tabItemActive2.model) {
+        var _this$$refs4, _this$$refs5;
 
-      const paginationFactory = (has, maxOffset, minOffset) => {
-        const paginationOffsets = Object.entries({
-          has,
-          maxOffset,
-          minOffset,
-          offset: minOffset
-        }).map(([k, v]) => [k, Math.abs(v)]);
-        return Object.fromEntries(paginationOffsets);
-      };
+        const navItemsElement = (_this$$refs4 = this.$refs) === null || _this$$refs4 === void 0 ? void 0 : _this$$refs4.navItems;
+        const {
+          navItemsWidth
+        } = this.getElementRect({
+          el: navItemsElement,
+          prefix: "navItems"
+        });
+        const {
+          navWidth,
+          navHeight
+        } = this.getElementRect({
+          el: (_this$$refs5 = this.$refs) === null || _this$$refs5 === void 0 ? void 0 : _this$$refs5.nav,
+          prefix: "nav"
+        });
+        const navItemsHeight = [...(navItemsElement === null || navItemsElement === void 0 ? void 0 : navItemsElement.children)].slice(0, -1).map(el => el.offsetHeight).reduce((a, c) => Math.abs(a + c), 0);
 
-      Object.assign(this.pagination, {
-        portrait: paginationFactory(navItemsHeight > navHeight, navItemsHeight - navHeight, navHeight),
-        landscape: paginationFactory(navItemsWidth > navWidth, navItemsWidth - navWidth, navWidth)
-      }[this.orientation]);
+        const paginationFactory = (has, maxOffset, minOffset) => {
+          const paginationOffsets = Object.entries({
+            has,
+            maxOffset,
+            minOffset,
+            offset: minOffset
+          }).map(([k, v]) => [k, Math.abs(v)]);
+          return Object.fromEntries(paginationOffsets);
+        };
 
-      if (this.pagination.maxOffset === 0) {
-        this.pagination.translate = 0;
+        Object.assign(this.pagination, {
+          portrait: paginationFactory(navItemsHeight > navHeight, navItemsHeight - navHeight, navHeight),
+          landscape: paginationFactory(navItemsWidth > navWidth, navItemsWidth - navWidth, navWidth)
+        }[this.orientation]);
+
+        if (this.pagination.maxOffset === 0) {
+          this.pagination.translate = 0;
+        }
       }
     },
 
@@ -689,7 +695,7 @@ var __vue_render__$2 = function () {
   }, [_c('ul', {
     ref: "navItems",
     staticClass: "tab__nav__items",
-    style: _vm.styles
+    style: _vm.transform
   }, [_vm._l(_vm.navItems, function (navItem) {
     return _c('li', {
       directives: [{
@@ -741,11 +747,11 @@ var __vue_staticRenderFns__$2 = [];
 
 const __vue_inject_styles__$2 = function (inject) {
   if (!inject) return;
-  inject("data-v-dd4668fe_0", {
-    source: ".tab__pagination[data-v-dd4668fe]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-dd4668fe],.tab__pagination__next[data-v-dd4668fe]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-dd4668fe] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-dd4668fe]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-dd4668fe]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-dd4668fe]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-dd4668fe]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-dd4668fe]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-dd4668fe]{background:#6969694f}.tab__slider[data-v-dd4668fe]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-dd4668fe]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-dd4668fe]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-dd4668fe]{padding:0;margin:0}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-dd4668fe] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-dd4668fe]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-dd4668fe]{flex:1 auto}",
+  inject("data-v-33239026_0", {
+    source: ".tab__pagination[data-v-33239026]{display:flex;justify-content:space-between;align-items:center;vertical-align:middle;max-width:100%;flex:0 1 auto;position:relative;contain:content}.tab__pagination .tab__pagination__prev[data-v-33239026],.tab__pagination__next[data-v-33239026]{flex:1 40px;min-width:40px}.tab__pagination__next[data-v-33239026] .btn svg{transform:rotate(180deg)}.tab__nav[data-v-33239026]{position:relative;display:flex;overflow:hidden;flex:1 100%}.tab__nav__items[data-v-33239026]{display:flex;margin:0;padding:0;flex:1 auto;transition:.3s cubic-bezier(.25,.8,.5,1);height:100%}.tab__nav__items .tab__nav__item[data-v-33239026]{list-style:none;text-align:center;cursor:pointer;padding:.9rem 1rem;letter-spacing:.0892857143em;display:flex;justify-content:center;align-items:center;text-align:center;text-transform:uppercase;font-size:.875rem;font-weight:500;white-space:normal;transition:background .1s ease;position:relative;overflow:hidden;min-width:90px;max-width:360px;user-select:none}.tab__nav__items .tab__nav__item[data-v-33239026]:hover:not(.disabled,.active){background:hsla(0,0%,100%,.09)}.tab__nav__items .active[data-v-33239026]:hover{background:hsla(0,0%,100%,.18)}.tab__nav__items .disabled[data-v-33239026]{background:#6969694f}.tab__slider[data-v-33239026]{height:2px;width:2px;border:none;margin:0;padding:0;bottom:0;position:absolute;transition:left .3s cubic-bezier(.25,.8,.5,1),top .3s cubic-bezier(.25,.8,.5,1)}.tab__pagination--vertical[data-v-33239026]{flex-direction:column}.tab__pagination--vertical .tab__nav__items[data-v-33239026]{flex-direction:column;flex:1 auto;position:relative}.tab__pagination--vertical .tab__nav__item *[data-v-33239026]{padding:0;margin:0}.tab__pagination--vertical[data-v-33239026] .tab__pagination__prev svg{transform:rotate(90deg)}.tab__pagination--vertical[data-v-33239026] .tab__pagination__next svg{transform:rotate(270deg)}.tab__pagination--vertical .tab__nav__item[data-v-33239026]{justify-content:left;padding-top:1.6rem;padding-bottom:1.6rem}.tab__pagination--auto .tab__nav__item[data-v-33239026]{flex:1 auto}",
     map: undefined,
     media: undefined
-  }), inject("data-v-dd4668fe_1", {
+  }), inject("data-v-33239026_1", {
     source: ".ripple{z-index:2;background-color:hsla(0,0%,100%,.23);border-radius:50%;position:absolute;transform:scale(0);animation:ripple .6s linear}@keyframes ripple{to{transform:scale(2.5);opacity:0}}",
     map: undefined,
     media: undefined
@@ -754,7 +760,7 @@ const __vue_inject_styles__$2 = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__$2 = "data-v-dd4668fe";
+const __vue_scope_id__$2 = "data-v-33239026";
 /* module identifier */
 
 const __vue_module_identifier__$2 = undefined;
@@ -891,14 +897,14 @@ var script$1 = {
   },
 
   methods: {
-    addTabItem(tabItemInstance) {
+    register(tabItemInstance) {
       if (this.isTabItemComponent(tabItemInstance)) {
         this.tabItems.push(tabItemInstance);
         this.setNavItem(tabItemInstance);
       }
     },
 
-    removeTabItem(tabItemInstance) {
+    unRegister(tabItemInstance) {
       if (this.isTabItemComponent(tabItemInstance)) {
         this.disableTabItem(tabItemInstance.ownNavItemIndex);
         this.tabItems.splice(this.findIndexTab(tabItemInstance), 1);
@@ -931,13 +937,9 @@ var script$1 = {
     },
 
     activeTabItem(tabItem) {
-      try {
-        if (!(tabItem !== null && tabItem !== void 0 && tabItem.disabled)) {
-          this.tabItemActive = tabItem;
-          this.$emit("input", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
-        }
-      } catch {
-        console.warn("An error occurred in active tab.");
+      if (!(tabItem !== null && tabItem !== void 0 && tabItem.disabled)) {
+        this.tabItemActive = tabItem;
+        this.$emit("input", tabItem === null || tabItem === void 0 ? void 0 : tabItem.name);
       }
     },
 
@@ -1029,8 +1031,8 @@ var __vue_staticRenderFns__$1 = [];
 
 const __vue_inject_styles__$1 = function (inject) {
   if (!inject) return;
-  inject("data-v-4ff86a0d_0", {
-    source: ".tabs[data-v-4ff86a0d]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%}.tabs__content[data-v-4ff86a0d]{display:flex;position:relative;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden}.tabs--vertical[data-v-4ff86a0d]{flex-direction:row}",
+  inject("data-v-12fd874c_0", {
+    source: ".tabs[data-v-12fd874c]{background:#fff;display:flex;flex-direction:column;border-radius:.23rem;height:100%;width:100%}.tabs__content[data-v-12fd874c]{display:flex;position:relative;justify-content:center;align-items:center;overflow:hidden}.tabs--vertical[data-v-12fd874c]{flex-direction:row}",
     map: undefined,
     media: undefined
   });
@@ -1038,7 +1040,7 @@ const __vue_inject_styles__$1 = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__$1 = "data-v-4ff86a0d";
+const __vue_scope_id__$1 = "data-v-12fd874c";
 /* module identifier */
 
 const __vue_module_identifier__$1 = undefined;
@@ -1081,13 +1083,11 @@ var script = {
   }),
 
   mounted() {
-    this.tabs.addTabItem(this);
+    this.tabs.register(this);
   },
 
   beforeDestroy() {
-    if (this.tabs) {
-      this.tabs.removeTabItem(this);
-    }
+    this.tabs.unRegister(this);
   },
 
   computed: {
@@ -1183,8 +1183,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-1650ba80_0", {
-    source: ".tab-item[data-v-1650ba80]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-1650ba80],.slide-right-leave-to[data-v-1650ba80]{transform:translateX(-100%)}.slide-left-leave-to[data-v-1650ba80],.slide-right-enter[data-v-1650ba80]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-1650ba80],.slide-top-enter[data-v-1650ba80]{transform:translateY(-100%)}.slide-bottom-enter[data-v-1650ba80],.slide-top-leave-to[data-v-1650ba80]{transform:translateY(100%)}",
+  inject("data-v-460da628_0", {
+    source: ".tab-item[data-v-460da628]{top:0;left:0;z-index:1;width:100%;height:inherit;background:#fff;transition:transform cubic-bezier(.25,.8,.5,1)}.slide-left-enter[data-v-460da628],.slide-right-leave-to[data-v-460da628]{transform:translateX(-100%)}.slide-left-leave-to[data-v-460da628],.slide-right-enter[data-v-460da628]{transform:translateX(100%)}.slide-bottom-leave-to[data-v-460da628],.slide-top-enter[data-v-460da628]{transform:translateY(-100%)}.slide-bottom-enter[data-v-460da628],.slide-top-leave-to[data-v-460da628]{transform:translateY(100%)}",
     map: undefined,
     media: undefined
   });
@@ -1192,7 +1192,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-1650ba80";
+const __vue_scope_id__ = "data-v-460da628";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
