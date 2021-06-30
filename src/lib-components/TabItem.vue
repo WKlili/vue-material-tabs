@@ -31,13 +31,11 @@ export default {
   }),
 
   mounted() {
-    this.tabs.addTabItem(this);
+    this.tabs.register(this);
   },
 
   beforeDestroy() {
-    if (this.tabs) {
-      this.tabs.removeTabItem(this);
-    }
+    this.tabs.unRegister(this);
   },
 
   computed: {

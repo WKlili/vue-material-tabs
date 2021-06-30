@@ -20,7 +20,7 @@ export default {
 
   computed: {
     svgStyle() {
-      return this.theme?.arrow ? { fill: this.theme.arrow } : "";
+      return `fill: ${this.theme.arrow || ""};`;
     },
   },
 };

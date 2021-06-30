@@ -7556,10 +7556,10 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-material-tabs@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vue-material-tabs/-/vue-material-tabs-0.1.0.tgz#b99c6c484c03112938e1f7a9894928e19e9a2f2a"
-  integrity sha512-Jv3nl6gSPLAPaxeLcRJBBTDxSpg2xHw6ChL/BJygMP7BUlPUq2zyqhHQsjPM6gyK2twaCNwWdDIGr29GrJU8hw==
+vue-material-tabs@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vue-material-tabs/-/vue-material-tabs-0.1.4.tgz#159eedc6a3d80152710f129a975d29b5c8e4fb0d"
+  integrity sha512-evWJTNS0kcUfs8irhleGc9/XbBC+7DWOTWrFBZCZvpZU8JqkN7HvBvyoRGjez2fuRkCjIKlazh6YMl3PYooiug==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.3"
