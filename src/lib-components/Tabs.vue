@@ -42,6 +42,10 @@ export default {
   },
 
   props: {
+    value: {
+      type: Number,
+      default: '0'
+    },
     theme: {
       type: [Object, String],
       default: "default",
@@ -125,7 +129,7 @@ export default {
   },
 
   mounted() {
-    this.activeTabItem(this.navItems[0]);
+    this.activeTabItem(this.navItems[this.value]);
   },
 
   methods: {
